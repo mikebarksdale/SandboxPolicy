@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4b2cef0281b34d86ba1231ee18388f10" Name="Diagram1">
+        <EntityTypeShape EntityType="SandboxPolicyModel.Insured" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SandboxPolicyModel.Policy" Width="1.5" PointX="3" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SandboxPolicyModel.PolicyCoverage" Width="1.5" PointX="8.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SandboxPolicyModel.Transaction" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <AssociationConnector Association="SandboxPolicyModel.FK__Insured__PolicyI__0AD2A005" ManuallyRouted="false" />
+        <AssociationConnector Association="SandboxPolicyModel.FK__Insured__Transac__0BC6C43E" ManuallyRouted="false" />
+        <AssociationConnector Association="SandboxPolicyModel.FK__Policy__Transact__060DEAE8" ManuallyRouted="false" />
+        <AssociationConnector Association="SandboxPolicyModel.FK__PolicyCov__Polic__108B795B" ManuallyRouted="false" />
+        <AssociationConnector Association="SandboxPolicyModel.FK__PolicyCov__Trans__117F9D94" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

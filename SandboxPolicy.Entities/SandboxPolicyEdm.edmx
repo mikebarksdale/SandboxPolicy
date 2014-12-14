@@ -1,0 +1,368 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SandboxPolicyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Insured">
+          <Key>
+            <PropertyRef Name="InsuredId" />
+          </Key>
+          <Property Name="InsuredId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="75" />
+          <Property Name="DbaName" Type="varchar" MaxLength="150" />
+          <Property Name="InsuredType" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="PolicyId" Type="int" Nullable="false" />
+          <Property Name="TransactionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Policy">
+          <Key>
+            <PropertyRef Name="PolicyId" />
+          </Key>
+          <Property Name="PolicyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Mod" Type="int" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="PolicyNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="140" />
+          <Property Name="EffectiveDate" Type="datetime" Nullable="false" />
+          <Property Name="ExpirationDate" Type="datetime" />
+          <Property Name="TransactionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PolicyCoverage">
+          <Key>
+            <PropertyRef Name="PolicyCoverageId" />
+          </Key>
+          <Property Name="PolicyCoverageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PolicyCoverageName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Limit" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Deductible" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="PolicyId" Type="int" Nullable="false" />
+          <Property Name="TransactionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="TransactionId" />
+          </Key>
+          <Property Name="TransactionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransactionRefId" Type="int" />
+          <Property Name="TransactionDate" Type="datetime" Nullable="false" />
+          <Property Name="TransactionType" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="ModifiedUser" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Insured__PolicyI__0AD2A005">
+          <End Role="Policy" Type="Self.Policy" Multiplicity="1" />
+          <End Role="Insured" Type="Self.Insured" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Policy">
+              <PropertyRef Name="PolicyId" />
+            </Principal>
+            <Dependent Role="Insured">
+              <PropertyRef Name="PolicyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Insured__Transac__0BC6C43E">
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="1" />
+          <End Role="Insured" Type="Self.Insured" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction">
+              <PropertyRef Name="TransactionId" />
+            </Principal>
+            <Dependent Role="Insured">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Policy__Transact__060DEAE8">
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="1" />
+          <End Role="Policy" Type="Self.Policy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction">
+              <PropertyRef Name="TransactionId" />
+            </Principal>
+            <Dependent Role="Policy">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PolicyCov__Polic__108B795B">
+          <End Role="Policy" Type="Self.Policy" Multiplicity="1" />
+          <End Role="PolicyCoverage" Type="Self.PolicyCoverage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Policy">
+              <PropertyRef Name="PolicyId" />
+            </Principal>
+            <Dependent Role="PolicyCoverage">
+              <PropertyRef Name="PolicyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PolicyCov__Trans__117F9D94">
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="1" />
+          <End Role="PolicyCoverage" Type="Self.PolicyCoverage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction">
+              <PropertyRef Name="TransactionId" />
+            </Principal>
+            <Dependent Role="PolicyCoverage">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SandboxPolicyModelStoreContainer">
+          <EntitySet Name="Insured" EntityType="Self.Insured" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Policy" EntityType="Self.Policy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PolicyCoverage" EntityType="Self.PolicyCoverage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Insured__PolicyI__0AD2A005" Association="Self.FK__Insured__PolicyI__0AD2A005">
+            <End Role="Policy" EntitySet="Policy" />
+            <End Role="Insured" EntitySet="Insured" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Insured__Transac__0BC6C43E" Association="Self.FK__Insured__Transac__0BC6C43E">
+            <End Role="Transaction" EntitySet="Transaction" />
+            <End Role="Insured" EntitySet="Insured" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Policy__Transact__060DEAE8" Association="Self.FK__Policy__Transact__060DEAE8">
+            <End Role="Transaction" EntitySet="Transaction" />
+            <End Role="Policy" EntitySet="Policy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PolicyCov__Polic__108B795B" Association="Self.FK__PolicyCov__Polic__108B795B">
+            <End Role="Policy" EntitySet="Policy" />
+            <End Role="PolicyCoverage" EntitySet="PolicyCoverage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PolicyCov__Trans__117F9D94" Association="Self.FK__PolicyCov__Trans__117F9D94">
+            <End Role="Transaction" EntitySet="Transaction" />
+            <End Role="PolicyCoverage" EntitySet="PolicyCoverage" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SandboxPolicyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Insured">
+          <Key>
+            <PropertyRef Name="InsuredId" />
+          </Key>
+          <Property Name="InsuredId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+          <Property Name="DbaName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="InsuredType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PolicyId" Type="Int32" Nullable="false" />
+          <Property Name="TransactionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Policy" Relationship="Self.FK__Insured__PolicyI__0AD2A005" FromRole="Insured" ToRole="Policy" />
+          <NavigationProperty Name="Transaction" Relationship="Self.FK__Insured__Transac__0BC6C43E" FromRole="Insured" ToRole="Transaction" />
+        </EntityType>
+        <EntityType Name="Policy">
+          <Key>
+            <PropertyRef Name="PolicyId" />
+          </Key>
+          <Property Name="PolicyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Mod" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PolicyNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EffectiveDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExpirationDate" Type="DateTime" Precision="3" />
+          <Property Name="TransactionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Insured" Relationship="Self.FK__Insured__PolicyI__0AD2A005" FromRole="Policy" ToRole="Insured" />
+          <NavigationProperty Name="Transaction" Relationship="Self.FK__Policy__Transact__060DEAE8" FromRole="Policy" ToRole="Transaction" />
+          <NavigationProperty Name="PolicyCoverage" Relationship="Self.FK__PolicyCov__Polic__108B795B" FromRole="Policy" ToRole="PolicyCoverage" />
+          <Property Name="Description" Type="String" MaxLength="140" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PolicyCoverage">
+          <Key>
+            <PropertyRef Name="PolicyCoverageId" />
+          </Key>
+          <Property Name="PolicyCoverageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PolicyCoverageName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Limit" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Deductible" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="PolicyId" Type="Int32" Nullable="false" />
+          <Property Name="TransactionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Policy" Relationship="Self.FK__PolicyCov__Polic__108B795B" FromRole="PolicyCoverage" ToRole="Policy" />
+          <NavigationProperty Name="Transaction" Relationship="Self.FK__PolicyCov__Trans__117F9D94" FromRole="PolicyCoverage" ToRole="Transaction" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="TransactionId" />
+          </Key>
+          <Property Name="TransactionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TransactionType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModifiedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Insured" Relationship="Self.FK__Insured__Transac__0BC6C43E" FromRole="Transaction" ToRole="Insured" />
+          <NavigationProperty Name="Policy" Relationship="Self.FK__Policy__Transact__060DEAE8" FromRole="Transaction" ToRole="Policy" />
+          <NavigationProperty Name="PolicyCoverage" Relationship="Self.FK__PolicyCov__Trans__117F9D94" FromRole="Transaction" ToRole="PolicyCoverage" />
+          <Property Name="TransactionRefId" Type="Int32" />
+        </EntityType>
+        <Association Name="FK__Insured__PolicyI__0AD2A005">
+          <End Role="Policy" Type="Self.Policy" Multiplicity="1" />
+          <End Role="Insured" Type="Self.Insured" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Policy">
+              <PropertyRef Name="PolicyId" />
+            </Principal>
+            <Dependent Role="Insured">
+              <PropertyRef Name="PolicyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Insured__Transac__0BC6C43E">
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="1" />
+          <End Role="Insured" Type="Self.Insured" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction">
+              <PropertyRef Name="TransactionId" />
+            </Principal>
+            <Dependent Role="Insured">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Policy__Transact__060DEAE8">
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="1" />
+          <End Role="Policy" Type="Self.Policy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction">
+              <PropertyRef Name="TransactionId" />
+            </Principal>
+            <Dependent Role="Policy">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PolicyCov__Polic__108B795B">
+          <End Role="Policy" Type="Self.Policy" Multiplicity="1" />
+          <End Role="PolicyCoverage" Type="Self.PolicyCoverage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Policy">
+              <PropertyRef Name="PolicyId" />
+            </Principal>
+            <Dependent Role="PolicyCoverage">
+              <PropertyRef Name="PolicyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PolicyCov__Trans__117F9D94">
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="1" />
+          <End Role="PolicyCoverage" Type="Self.PolicyCoverage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction">
+              <PropertyRef Name="TransactionId" />
+            </Principal>
+            <Dependent Role="PolicyCoverage">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SandboxPolicyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Insured" EntityType="Self.Insured" />
+          <EntitySet Name="Policy" EntityType="Self.Policy" />
+          <EntitySet Name="PolicyCoverage" EntityType="Self.PolicyCoverage" />
+          <EntitySet Name="Transaction" EntityType="Self.Transaction" />
+          <AssociationSet Name="FK__Insured__PolicyI__0AD2A005" Association="Self.FK__Insured__PolicyI__0AD2A005">
+            <End Role="Policy" EntitySet="Policy" />
+            <End Role="Insured" EntitySet="Insured" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Insured__Transac__0BC6C43E" Association="Self.FK__Insured__Transac__0BC6C43E">
+            <End Role="Transaction" EntitySet="Transaction" />
+            <End Role="Insured" EntitySet="Insured" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Policy__Transact__060DEAE8" Association="Self.FK__Policy__Transact__060DEAE8">
+            <End Role="Transaction" EntitySet="Transaction" />
+            <End Role="Policy" EntitySet="Policy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PolicyCov__Polic__108B795B" Association="Self.FK__PolicyCov__Polic__108B795B">
+            <End Role="Policy" EntitySet="Policy" />
+            <End Role="PolicyCoverage" EntitySet="PolicyCoverage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PolicyCov__Trans__117F9D94" Association="Self.FK__PolicyCov__Trans__117F9D94">
+            <End Role="Transaction" EntitySet="Transaction" />
+            <End Role="PolicyCoverage" EntitySet="PolicyCoverage" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SandboxPolicyModelStoreContainer" CdmEntityContainer="SandboxPolicyEntities">
+          <EntitySetMapping Name="Insured">
+            <EntityTypeMapping TypeName="SandboxPolicyModel.Insured">
+              <MappingFragment StoreEntitySet="Insured">
+                <ScalarProperty Name="InsuredId" ColumnName="InsuredId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="DbaName" ColumnName="DbaName" />
+                <ScalarProperty Name="InsuredType" ColumnName="InsuredType" />
+                <ScalarProperty Name="PolicyId" ColumnName="PolicyId" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Policy">
+            <EntityTypeMapping TypeName="SandboxPolicyModel.Policy">
+              <MappingFragment StoreEntitySet="Policy">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PolicyId" ColumnName="PolicyId" />
+                <ScalarProperty Name="Mod" ColumnName="Mod" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PolicyNumber" ColumnName="PolicyNumber" />
+                <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PolicyCoverage">
+            <EntityTypeMapping TypeName="SandboxPolicyModel.PolicyCoverage">
+              <MappingFragment StoreEntitySet="PolicyCoverage">
+                <ScalarProperty Name="PolicyCoverageId" ColumnName="PolicyCoverageId" />
+                <ScalarProperty Name="PolicyCoverageName" ColumnName="PolicyCoverageName" />
+                <ScalarProperty Name="Limit" ColumnName="Limit" />
+                <ScalarProperty Name="Deductible" ColumnName="Deductible" />
+                <ScalarProperty Name="PolicyId" ColumnName="PolicyId" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transaction">
+            <EntityTypeMapping TypeName="SandboxPolicyModel.Transaction">
+              <MappingFragment StoreEntitySet="Transaction">
+                <ScalarProperty Name="TransactionRefId" ColumnName="TransactionRefId" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
