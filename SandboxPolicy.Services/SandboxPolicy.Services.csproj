@@ -29,6 +29,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'UnitOfWork|AnyCPU'">
+    <OutputPath>bin\UnitOfWork\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
@@ -59,10 +62,13 @@
     <Compile Include="CommandQuery\Command\IssuePolicyCommand.cs" />
     <Compile Include="CommandQuery\Command\SavePolicyCommand.cs" />
     <Compile Include="Extensions\QueryExtensions.cs" />
+    <Compile Include="PolicyDbService.cs" />
     <Compile Include="Service\IPolicyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\PolicyService.cs" />
     <Compile Include="Extensions\ObjectCopier.cs" />
+    <Compile Include="Service\PolicyServiceFactory.cs" />
+    <Compile Include="Service\PolicyUnitOfWorkService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SandboxPolicy.Entities\SandboxPolicy.Entities.csproj">
@@ -72,6 +78,10 @@
     <ProjectReference Include="..\SandboxPolicy.Models\SandboxPolicy.Models.csproj">
       <Project>{09e606f2-bcf1-4a2a-807b-aa0516c7b0d7}</Project>
       <Name>SandboxPolicy.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SandboxPolicy.Repository\SandboxPolicy.Repository.csproj">
+      <Project>{11e31afb-422b-4fbe-b9c0-a8638e6179f6}</Project>
+      <Name>SandboxPolicy.Repository</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

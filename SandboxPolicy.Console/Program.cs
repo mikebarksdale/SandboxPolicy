@@ -1,18 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SandboxPolicy.Entities;
+using Microsoft.Practices.Unity;
 using SandboxPolicy.Models;
+using SandboxPolicy.Services;
 using SandboxPolicy.Services.Service;
 
 namespace SandboxPolicy.Console
 {
     class Program
     {
+        protected static IUnityContainer Container;
+        protected static IPolicyServiceFactory PolicyServiceFactory;
+
         static void Main(string[] args)
         {
+            InitializeContainer();
+            PolicyServiceFactory = Container.Resolve<IPolicyServiceFactory>();
+
             var policyModel = new PolicyModel
             {
                 EffectiveDate = new DateTime(2014, 12, 25),
@@ -33,7 +37,7 @@ namespace SandboxPolicy.Console
 
             policyModel.Insureds.Add(insuredModel);
             policyModel = UpdatePolicyAction(policyModel);
-
+            
             //coverage view
             var coverageModel = new CoverageModel
             {
@@ -69,56 +73,34 @@ namespace SandboxPolicy.Console
             IssuePolicyAction(quoteModel1);
         }
 
+        private static void InitializeContainer()
+        {
+            Container = new UnityContainer();
+            Container.RegisterType<IPolicyServiceFactory, PolicyServiceFactory>();
+        }
+
         private static PolicyModel CreatePolicyAction(PolicyModel policyModel)
         {
-            var model = new PolicyModel();
-
-            using (var context = new SandboxPolicyEntities())
-            {
-                var policyService = new PolicyService(context);
-                model = policyService.CreatePolicy(policyModel);
-            }
-
-            return model;
+            var policyService = PolicyServiceFactory.GetService(typeof (PolicyDbService));
+            return policyService.CreatePolicy(policyModel);
         }
 
         private static PolicyModel UpdatePolicyAction(PolicyModel policyModel)
         {
-            var model = new PolicyModel();
-
-            using(var context = new SandboxPolicyEntities())
-            {
-                var policyService = new PolicyService(context);
-                model = policyService.UpdatePolicy(policyModel);
-            }
-
-            return model;
+            var policyService = PolicyServiceFactory.GetService(typeof(PolicyDbService));
+            return policyService.UpdatePolicy(policyModel);
         }
 
         private static PolicyModel IssuePolicyAction(PolicyModel policyModel)
         {
-            var model = new PolicyModel();
-
-            using(var context = new SandboxPolicyEntities())
-            {
-                var policyService = new PolicyService(context);
-                model = policyService.IssueQuote(policyModel);
-            }
-
-            return model;
+            var policyService = PolicyServiceFactory.GetService(typeof(PolicyDbService));
+            return policyService.IssueQuote(policyModel);
         }
 
         private static PolicyModel CopyQuote(PolicyModel policyModel)
         {
-            var model = new PolicyModel();
-
-            using(var context = new SandboxPolicyEntities())
-            {
-                var policyService = new PolicyService(context);
-                model = policyService.CopyQuote(policyModel.PolicyId, policyModel.Mod);
-            }
-
-            return model;
+            var policyService = PolicyServiceFactory.GetService(typeof(PolicyDbService));
+            return policyService.CopyQuote(policyModel.PolicyId, policyModel.Mod);
         }
     }
 }

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SandboxPolicy.Entities;
 using SandboxPolicy.Models;
 using SandboxPolicy.Services.Adapters;
@@ -34,6 +30,7 @@ namespace SandboxPolicy.Services.Service
                 TransactionStatus = "WIP",
                 User = policyModel.User
             };
+
             var policy = createPolicyCommand.Execute();
 
             return PolicyAdapter.ToPolicyModel(policy);
