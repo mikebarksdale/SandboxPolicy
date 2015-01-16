@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandboxPolicy.Entities", "SandboxPolicy.Entities\SandboxPolicy.Entities.csproj", "{BCC02348-0272-47AA-A787-74D0B6CC9099}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandboxPolicy.Services", "SandboxPolicy.Services\SandboxPolicy.Services.csproj", "{AC13D1F4-1367-49B0-BBC8-A815EDBFE438}"
@@ -12,6 +14,8 @@ EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SandboxPolicy.Database", "SandboxPolicy.Database\SandboxPolicy.Database.sqlproj", "{CA157C21-5BDD-479F-BA9D-33E0ACD4D453}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandboxPolicy.Repository", "SandboxPolicy.Repository\SandboxPolicy.Repository.csproj", "{11E31AFB-422B-4FBE-B9C0-A8638E6179F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandboxPolicy.Tests", "SandboxPolicy.Tests\SandboxPolicy.Tests.csproj", "{3E84B9E8-040C-410C-B948-FE6C214B7598}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,10 @@ Global
 		{11E31AFB-422B-4FBE-B9C0-A8638E6179F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11E31AFB-422B-4FBE-B9C0-A8638E6179F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11E31AFB-422B-4FBE-B9C0-A8638E6179F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E84B9E8-040C-410C-B948-FE6C214B7598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E84B9E8-040C-410C-B948-FE6C214B7598}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E84B9E8-040C-410C-B948-FE6C214B7598}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E84B9E8-040C-410C-B948-FE6C214B7598}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

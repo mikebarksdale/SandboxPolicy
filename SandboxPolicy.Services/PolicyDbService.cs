@@ -19,7 +19,7 @@ namespace SandboxPolicy.Services
             _context = context;
         }
 
-        public PolicyModel CreatePolicy(PolicyModel policyModel)
+        public IPolicyModel CreatePolicy(IPolicyModel policyModel)
         {
             if (policyModel == null)
                 throw new ArgumentNullException("policyModel");
@@ -45,7 +45,7 @@ namespace SandboxPolicy.Services
             return PolicyAdapter.ToPolicyModel(policy);
         }
 
-        public PolicyModel UpdatePolicy(PolicyModel policyModel)
+        public IPolicyModel UpdatePolicy(IPolicyModel policyModel)
         {
             if (policyModel == null)
                 throw new ArgumentNullException("policyModel");
@@ -109,7 +109,7 @@ namespace SandboxPolicy.Services
             return PolicyAdapter.ToPolicyModel(originalPolicy);
         }
 
-        public PolicyModel CopyQuote(int policyId, int mod)
+        public IPolicyModel CopyQuote(int policyId, int mod)
         {
             var query = _context.Policy.Where(
                 p => p.PolicyId == policyId && p.Status.Equals("Quote", StringComparison.InvariantCultureIgnoreCase));
@@ -139,7 +139,7 @@ namespace SandboxPolicy.Services
             return PolicyAdapter.ToPolicyModel(copiedQuote);
         }
 
-        public PolicyModel IssueQuote(PolicyModel policyModel)
+        public IPolicyModel IssueQuote(IPolicyModel policyModel)
         {
             if (policyModel == null)
                 throw new ArgumentNullException("policyModel");

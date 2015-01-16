@@ -10,7 +10,7 @@ namespace SandboxPolicy.Services.Adapters
 {
     public static class InsuredAdapter
     {
-        public static InsuredModel ToInsuredModel(Insured insured)
+        public static IInsuredModel ToInsuredModel(Insured insured)
         {
             var insuredModel = new InsuredModel();
 
@@ -25,7 +25,7 @@ namespace SandboxPolicy.Services.Adapters
             return insuredModel;
         }
 
-        public static Insured ToInsured(InsuredModel insuredModel)
+        public static Insured ToInsured(IInsuredModel insuredModel)
         {
             var insured = new Insured();
 

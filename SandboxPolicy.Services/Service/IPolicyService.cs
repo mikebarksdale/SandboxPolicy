@@ -9,10 +9,10 @@ namespace SandboxPolicy.Services
 {
     public interface IPolicyService
     {
-        PolicyModel CreatePolicy(PolicyModel policyModel);
-        PolicyModel UpdatePolicy(PolicyModel policyModel);
-        PolicyModel CopyQuote(int policyId, int mod);
-        PolicyModel IssueQuote(PolicyModel policyModel);
+        IPolicyModel CreatePolicy(IPolicyModel policyModel);
+        IPolicyModel UpdatePolicy(IPolicyModel policyModel);
+        IPolicyModel CopyQuote(int policyId, int mod);
+        IPolicyModel IssueQuote(IPolicyModel policyModel);
 
         void RenewPolicy();
         void GetPolicies();

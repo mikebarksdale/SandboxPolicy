@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace SandboxPolicy.Models
 {
-    public class CoverageModel
+    public interface ICoverageModel
+    {
+        int CoverageId { get; set; }
+        string Coverage { get; set; }
+        decimal Limit { get; set; }
+        decimal Deductible { get; set; }
+        int TransactionId { get; set; }
+    }
+
+    public class CoverageModel : ICoverageModel
     {
         public int CoverageId { get; set; }
         public string Coverage { get; set; }

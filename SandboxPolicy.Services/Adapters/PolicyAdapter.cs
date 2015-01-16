@@ -10,18 +10,19 @@ namespace SandboxPolicy.Services.Adapters
 {
     public static class PolicyAdapter
     {
-        public static PolicyModel ToPolicyModel(Policy policy)
+        public static IPolicyModel ToPolicyModel(Policy policy)
         {
-            var policyModel = new PolicyModel();
-
-            policyModel.PolicyId = policy.PolicyId;
-            policyModel.PolicyNumber = policy.PolicyNumber;
-            policyModel.Description = policy.Description;
-            policyModel.Mod = policy.Mod;
-            policyModel.EffectiveDate = policy.EffectiveDate;
-            policyModel.ExpirationDate = policy.ExpirationDate;
-            policyModel.TransactionId = policy.TransactionId;
-            policyModel.Status = policy.Status;
+            var policyModel = new PolicyModel
+            {
+                PolicyId = policy.PolicyId,
+                PolicyNumber = policy.PolicyNumber,
+                Description = policy.Description,
+                Mod = policy.Mod,
+                EffectiveDate = policy.EffectiveDate,
+                ExpirationDate = policy.ExpirationDate,
+                TransactionId = policy.TransactionId,
+                Status = policy.Status
+            };
 
             foreach (var insured in policy.Insured)
                 policyModel.Insureds.Add(InsuredAdapter.ToInsuredModel(insured));
@@ -32,7 +33,7 @@ namespace SandboxPolicy.Services.Adapters
             return policyModel;
         }
 
-        public static Policy ToPolicy(PolicyModel policyModel)
+        public static Policy ToPolicy(IPolicyModel policyModel)
         {
             var policy = new Policy();
 

@@ -17,7 +17,7 @@ namespace SandboxPolicy.Console
             InitializeContainer();
             PolicyServiceFactory = Container.Resolve<IPolicyServiceFactory>();
 
-            var policyModel = new PolicyModel
+            IPolicyModel policyModel = new PolicyModel
             {
                 EffectiveDate = new DateTime(2014, 12, 25),
                 ExpirationDate = new DateTime(2015, 12, 25),
@@ -79,25 +79,25 @@ namespace SandboxPolicy.Console
             Container.RegisterType<IPolicyServiceFactory, PolicyServiceFactory>();
         }
 
-        private static PolicyModel CreatePolicyAction(PolicyModel policyModel)
+        private static IPolicyModel CreatePolicyAction(IPolicyModel policyModel)
         {
             var policyService = PolicyServiceFactory.GetService(typeof (PolicyDbService));
             return policyService.CreatePolicy(policyModel);
         }
 
-        private static PolicyModel UpdatePolicyAction(PolicyModel policyModel)
+        private static IPolicyModel UpdatePolicyAction(IPolicyModel policyModel)
         {
             var policyService = PolicyServiceFactory.GetService(typeof(PolicyDbService));
             return policyService.UpdatePolicy(policyModel);
         }
 
-        private static PolicyModel IssuePolicyAction(PolicyModel policyModel)
+        private static IPolicyModel IssuePolicyAction(IPolicyModel policyModel)
         {
             var policyService = PolicyServiceFactory.GetService(typeof(PolicyDbService));
             return policyService.IssueQuote(policyModel);
         }
 
-        private static PolicyModel CopyQuote(PolicyModel policyModel)
+        private static IPolicyModel CopyQuote(IPolicyModel policyModel)
         {
             var policyService = PolicyServiceFactory.GetService(typeof(PolicyDbService));
             return policyService.CopyQuote(policyModel.PolicyId, policyModel.Mod);

@@ -10,7 +10,7 @@ namespace SandboxPolicy.Services.Adapters
 {
     public static class CoverageAdapter
     {
-        public static CoverageModel ToCoverageModel(PolicyCoverage coverage)
+        public static ICoverageModel ToCoverageModel(PolicyCoverage coverage)
         {
             var coverageModel = new CoverageModel();
 
@@ -23,7 +23,7 @@ namespace SandboxPolicy.Services.Adapters
             return coverageModel;
         }
 
-        public static PolicyCoverage ToPolicyCoverage(CoverageModel coverageModel)
+        public static PolicyCoverage ToPolicyCoverage(ICoverageModel coverageModel)
         {
             var coverage = new PolicyCoverage();
 

@@ -6,15 +6,29 @@ using System.Threading.Tasks;
 
 namespace SandboxPolicy.Models
 {
-    public class PolicyModel : IAuditModel
+    public interface IPolicyModel : IAuditModel
     {
-        public IList<InsuredModel> Insureds;
-        public IList<CoverageModel> Coverages;
+        IList<IInsuredModel> Insureds { get; set; }
+        IList<ICoverageModel> Coverages { get; set; }
+        int PolicyId { get; set; }
+        string PolicyNumber { get; set; }
+        int Mod { get; set; }
+        string Status { get; set; }
+        string Description { get; set; }
+        DateTime EffectiveDate { get; set; }
+        DateTime? ExpirationDate { get; set; }
+        int TransactionId { get; set; }
+    }
+
+    public class PolicyModel : IPolicyModel
+    {
+        public IList<IInsuredModel> Insureds { get; set; }
+        public IList<ICoverageModel> Coverages { get; set; }
 
         public PolicyModel()
         {
-            Insureds = new List<InsuredModel>();
-            Coverages = new List<CoverageModel>();
+            Insureds = new List<IInsuredModel>();
+            Coverages = new List<ICoverageModel>();
         }
 
         public int PolicyId { get; set; }
